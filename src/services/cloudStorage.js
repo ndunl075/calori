@@ -1,4 +1,5 @@
 // Calori Cloud Data Storage & Sync Service
+import { saveUserLogsToFirebase } from './firebase';
 
 const STORAGE_KEYS = {
   LOGS: 'calori_logs_v2', // bumped key to ensure previous demo logs in v1 are wiped clean!
@@ -103,7 +104,7 @@ export const saveTargets = (targets) => {
   }
 };
 
-// Cloud API Sync simulation (Simulates HTTPS cloud payload push with server timestamp)
+// Cloud API Sync service (Firebase Firestore + Local fallback)
 export const syncWithCloudServer = async (allLogs) => {
   const sessionId = getCloudSessionId();
   try {
@@ -114,9 +115,13 @@ export const syncWithCloudServer = async (allLogs) => {
       targets: loadTargets()
     };
     
-    // Store cloud snapshot in localStorage under cloud backup key
+    // 1. Local & Session persistence snapshot
     localStorage.setItem(`calori_cloud_remote_${sessionId}`, JSON.stringify(payload));
-    return { success: true, timestamp: payload.updatedAt, sessionId };
+
+    // 2. Firebase Firestore cloud document push
+    const fbRes = await saveUserLogsToFirebase(sessionId, allLogs, loadTargets());
+
+    return { success: true, timestamp: payload.updatedAt, sessionId, mode: fbRes.mode };
   } catch (err) {
     return { success: false, error: err.message };
   }
