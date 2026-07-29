@@ -133,28 +133,11 @@ export default function App() {
             logs={currentLogs}
             onDeleteLog={handleDeleteLog}
             onNavigate={(tab) => setActiveTab(tab)}
+            onUpdateTargets={handleUpdateTargets}
           />
         )}
 
-        {activeTab === 'energy' && (
-          <EnergyView 
-            totals={totals}
-            targets={targets}
-            logs={currentLogs}
-            onDeleteLog={handleDeleteLog}
-          />
-        )}
-
-        {activeTab === 'recovery' && (
-          <RecoveryView 
-            totals={totals}
-            targets={targets}
-            logs={currentLogs}
-            onDeleteLog={handleDeleteLog}
-          />
-        )}
-
-        {activeTab === 'analytics' && (
+        {(activeTab === 'trends' || activeTab === 'targets' || activeTab === 'analytics') && (
           <AnalyticsView 
             totals={totals}
             targets={targets}

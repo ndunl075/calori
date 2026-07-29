@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Settings, Pencil, Check, X } from 'lucide-react';
 import RingGauge from '../components/RingGauge';
 import CoachingCard from '../components/CoachingCard';
 import EnergyBalance from '../components/EnergyBalance';
@@ -9,14 +10,30 @@ export default function HomeView({
   targets, 
   logs, 
   onDeleteLog, 
-  onNavigate 
+  onNavigate,
+  onUpdateTargets
 }) {
+  const [showTargetEdit, setShowTargetEdit] = useState(false);
+  const [tempTargets, setTempTargets] = useState({ ...targets });
+
   const calPercent = Math.min(Math.round((totals.calories / targets.calories) * 100), 100);
   const carbsPercent = Math.min(Math.round((totals.carbs / targets.carbs) * 100), 100);
   const fatPercent = Math.min(Math.round((totals.fat / targets.fat) * 100), 100);
   const proteinPercent = Math.min(Math.round((totals.protein / targets.protein) * 100), 100);
 
   const remainingCalories = Math.max(targets.calories - totals.calories, 0);
+
+  const handleSaveQuickTargets = (e) => {
+    e.preventDefault();
+    onUpdateTargets({
+      calories: parseInt(tempTargets.calories) || 2000,
+      protein: parseInt(tempTargets.protein) || 150,
+      carbs: parseInt(tempTargets.carbs) || 200,
+      fat: parseInt(tempTargets.fat) || 70,
+      water: parseInt(tempTargets.water) || 2500
+    });
+    setShowTargetEdit(false);
+  };
 
   // Dynamic AI coaching message logic based on logged intake
   const getCoachingMessage = () => {
@@ -37,18 +54,44 @@ export default function HomeView({
       {/* Top Rectangular Calorie Bar */}
       <div 
         className="card" 
-        onClick={() => onNavigate('energy')} 
-        style={{ cursor: 'pointer', marginBottom: '14px', background: 'linear-gradient(135deg, #ffffff 0%, #fffbf5 100%)' }}
+        style={{ marginBottom: '14px', background: 'linear-gradient(135deg, #ffffff 0%, #fffbf5 100%)' }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
-            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f97316', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-              Daily Calories
-            </span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.2 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f97316', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                Daily Calories
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTempTargets({ ...targets });
+                  setShowTargetEdit(true);
+                }}
+                style={{
+                  background: '#fff7ed',
+                  border: '1px solid #ffedd5',
+                  borderRadius: '8px',
+                  padding: '2px 8px',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  color: '#ea580c',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <Pencil size={11} />
+                <span>Edit Target</span>
+              </button>
+            </div>
+
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.2, marginTop: '2px' }}>
               {totals.calories} <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>/ {targets.calories} kcal</span>
             </div>
           </div>
+
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#22c55e' }}>
               {remainingCalories}
@@ -171,6 +214,91 @@ export default function HomeView({
         logs={logs}
         onDeleteLog={onDeleteLog}
       />
+
+      {/* Quick Edit Targets Modal */}
+      {showTargetEdit && (
+        <div className="modal-overlay" onClick={() => setShowTargetEdit(false)}>
+          <div className="modal-sheet" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>
+                  Edit Daily Targets & Max Calories
+                </h3>
+                <p style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  Adjust your daily calorie goal and macro targets
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowTargetEdit(false)}
+                style={{ background: '#f1f5f9', border: 'none', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer' }}
+              >
+                <X size={18} color="#64748b" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveQuickTargets} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                  Max Daily Calories (kcal)
+                </label>
+                <input 
+                  type="number"
+                  className="input-field"
+                  value={tempTargets.calories}
+                  onChange={(e) => setTempTargets({ ...tempTargets, calories: e.target.value })}
+                  placeholder="e.g. 2200"
+                  required
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+                <div>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                    Carbs (g)
+                  </label>
+                  <input 
+                    type="number"
+                    className="input-field"
+                    value={tempTargets.carbs}
+                    onChange={(e) => setTempTargets({ ...tempTargets, carbs: e.target.value })}
+                    placeholder="220"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                    Fat (g)
+                  </label>
+                  <input 
+                    type="number"
+                    className="input-field"
+                    value={tempTargets.fat}
+                    onChange={(e) => setTempTargets({ ...tempTargets, fat: e.target.value })}
+                    placeholder="70"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
+                    Protein (g)
+                  </label>
+                  <input 
+                    type="number"
+                    className="input-field"
+                    value={tempTargets.protein}
+                    onChange={(e) => setTempTargets({ ...tempTargets, protein: e.target.value })}
+                    placeholder="150"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" className="btn-primary" style={{ marginTop: '8px' }}>
+                Save New Daily Goal
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
