@@ -230,37 +230,46 @@ export default function AnalyticsView({ totals, targets, onUpdateTargets, allLog
           <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Macro Energy Distribution</h4>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-              <span>Carbohydrates ({realInsights.avgCarbs}g avg)</span>
-              <span style={{ color: '#6366f1' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.carbs * 4 / (totals.calories || 1)) * 100) : 45}% Energy</span>
-            </div>
-            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.carbs * 4 / (totals.calories || 1)) * 100) : 45}%`, height: '100%', background: '#6366f1', borderRadius: '4px' }} />
-            </div>
-          </div>
+        {(() => {
+          const totalMacroCal = (totals.carbs * 4) + (totals.protein * 4) + (totals.fat * 9);
+          const cPct = totalMacroCal > 0 ? Math.round(((totals.carbs * 4) / totalMacroCal) * 100) : 0;
+          const pPct = totalMacroCal > 0 ? Math.round(((totals.protein * 4) / totalMacroCal) * 100) : 0;
+          const fPct = totalMacroCal > 0 ? Math.round(((totals.fat * 9) / totalMacroCal) * 100) : 0;
 
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-              <span>Protein ({realInsights.avgProtein}g avg)</span>
-              <span style={{ color: '#22c55e' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.protein * 4 / (totals.calories || 1)) * 100) : 30}% Energy</span>
-            </div>
-            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.protein * 4 / (totals.calories || 1)) * 100) : 30}%`, height: '100%', background: '#22c55e', borderRadius: '4px' }} />
-            </div>
-          </div>
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+                  <span>Carbohydrates ({realInsights.avgCarbs}g avg)</span>
+                  <span style={{ color: '#6366f1' }}>{cPct}% Energy</span>
+                </div>
+                <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: `${cPct}%`, height: '100%', background: '#6366f1', borderRadius: '4px', transition: 'width 0.4s ease' }} />
+                </div>
+              </div>
 
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-              <span>Fats ({realInsights.avgFat}g avg)</span>
-              <span style={{ color: '#f59e0b' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.fat * 9 / (totals.calories || 1)) * 100) : 25}% Energy</span>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+                  <span>Protein ({realInsights.avgProtein}g avg)</span>
+                  <span style={{ color: '#22c55e' }}>{pPct}% Energy</span>
+                </div>
+                <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: `${pPct}%`, height: '100%', background: '#22c55e', borderRadius: '4px', transition: 'width 0.4s ease' }} />
+                </div>
+              </div>
+
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+                  <span>Fats ({realInsights.avgFat}g avg)</span>
+                  <span style={{ color: '#f59e0b' }}>{fPct}% Energy</span>
+                </div>
+                <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: `${fPct}%`, height: '100%', background: '#f59e0b', borderRadius: '4px', transition: 'width 0.4s ease' }} />
+                </div>
+              </div>
             </div>
-            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.fat * 9 / (totals.calories || 1)) * 100) : 25}%`, height: '100%', background: '#f59e0b', borderRadius: '4px' }} />
-            </div>
-          </div>
-        </div>
+          );
+        })()}
       </div>
     </div>
   );
