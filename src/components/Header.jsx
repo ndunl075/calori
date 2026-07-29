@@ -54,31 +54,11 @@ export default function Header({
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {/* Cloud Sync Status Indicator */}
-              <div 
-                title={`Cloud Synced: Session ${sessionId}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  background: cloudSynced ? '#f0fdf4' : '#fff1f2',
-                  border: `1px solid ${cloudSynced ? '#bbf7d0' : '#fecdd3'}`,
-                  padding: '4px 8px',
-                  borderRadius: '12px',
-                  fontSize: '0.7rem',
-                  fontWeight: 700,
-                  color: cloudSynced ? '#15803d' : '#be123c'
-                }}
-              >
-                {cloudSynced ? <Cloud size={14} /> : <CloudOff size={14} />}
-                <span>Cloud</span>
-              </div>
-
               {/* User Profile Badge */}
               <div 
                 className="profile-avatar"
                 style={{ background: '#f1f5f9', color: '#0f172a', border: '1px solid #cbd5e1' }}
-                title="User Profile & Account"
+                title="User Profile"
               >
                 <User size={18} />
               </div>

@@ -313,15 +313,15 @@ export default function GoalsView({ targets, onUpdateTargets }) {
         </form>
       </div>
 
-      {/* Cloud Session & Data Management */}
+      {/* Data Backup & Account Key */}
       <div className="card" style={{ margin: '0 0 16px 0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <Cloud size={20} color="#0284c7" />
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Cloud Sync & Account Key</h4>
+          <FileText size={20} color="#0284c7" />
+          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Data Backup & Account Key</h4>
         </div>
 
         <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '12px', marginBottom: '12px', border: '1px solid #e2e8f0' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>Cloud Session Key</div>
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>Account Key</div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <code style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a' }}>{sessionId}</code>
             <button 
@@ -338,7 +338,7 @@ export default function GoalsView({ targets, onUpdateTargets }) {
           style={{ width: '100%', padding: '10px', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#ffffff', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
         >
           <Download size={14} />
-          <span>Export Cloud Backup JSON</span>
+          <span>Export Backup JSON</span>
         </button>
 
         {backupJSON && (

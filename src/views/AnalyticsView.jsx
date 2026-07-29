@@ -124,7 +124,7 @@ export default function AnalyticsView({ totals, targets, onUpdateTargets, allLog
   return (
     <div style={{ padding: '16px', animation: 'fadeIn 0.25s ease' }}>
       <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px' }}>
-        Trends & Cloud Sync
+        Trends & Insights
       </h2>
 
       {/* Weekly Calorie Bar Chart */}
