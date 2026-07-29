@@ -1,0 +1,33 @@
+{
+  "name": "calori",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Premium open-source mobile-first calorie & macro tracker inspired by WHOOP and MyFitnessPal",
+  "license": "MIT",
+  "keywords": [
+    "fitness",
+    "calorie-tracker",
+    "macro-tracker",
+    "whoop-ui",
+    "myfitnesspal",
+    "react",
+    "vite",
+    "cloud-sync"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.344.0",
+    "canvas-confetti": "^1.9.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.4"
+  }
+}
