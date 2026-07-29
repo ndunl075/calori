@@ -1,4 +1,4 @@
-# Calori 🥗🔥
+# Calori
 
 > **Open-Source, Mobile-First Calorie & Macro Tracker** inspired by WHOOP aesthetic and MyFitnessPal functionality.
 
@@ -9,21 +9,20 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎯 **Triple Radial Progress Rings**: High-contrast, glowing radial gauges for **Calories** (Strain), **Protein** (Recovery), and **Carbs** (Energy).
-- 🧠 **AI Nutrition Coach Banner**: Real-time context-aware feedback based on remaining daily macros and intake goals.
-- ⚡ **Macro & Energy Balance Equalizer**: 24-segment progress meter with live intake vs target score readouts.
-- 🎨 **Ambient Mesh Gradient Screens**:
-  - **Sand/Orange Mesh (Strain View)**: Central 135px circular gauge, Duration, Total Energy (kJ), and Heart Rate burn zones.
-  - **Teal Mountain Mesh (Recovery View)**: Resting HRV, Resting HR, and sleep/recovery timeline.
-- 📱 **Floating Glassmorphism Nav Bar**: Mobile-docked bottom bar with elevated center `+ Quick Add` button.
-- 🍎 **Food Search Library & Custom Add**: 20+ pre-seeded nutritious foods with portion multipliers (0.5x - 2x) and custom macro logger.
-- ☁️ **Cloud Storage Persistence & JSON Backup**: Auto-generates persistent Cloud Session Keys (`CALORI-XXXXXX`) with export & restore capabilities.
+- **Daily Calorie Target Bar**: Prominent top rectangular progress bar displaying logged intake vs target goal with real-time remaining calorie readouts.
+- **Triple Macro Ring Gauges**: High-contrast, SVG radial progress gauges for **Carbs**, **Fat**, and **Protein** with exact center percentage alignment.
+- **AI Nutrition Coach Banner**: Dynamic, context-aware feedback based on remaining daily macros and intake goals.
+- **Macro & Energy Balance Equalizer**: 24-segment progress meter with live intake vs target score readouts.
+- **Floating Glassmorphism Nav Bar**: Mobile-docked bottom navigation bar with elevated center `+ Quick Add` button.
+- **Food Search Library & Persistent Custom Food Add**: Pre-seeded food database with portion multipliers (0.5x - 2x) and custom food auto-saving library.
+- **Logged Data Trends & Insights**: Automatically extracts real-time averages, most frequently logged foods, peak intake days, and streak counts.
+- **Cloud Storage Persistence & Firebase Integration**: Auto-generates persistent Cloud Session Keys (`CALORI-XXXXXX`) with Firebase Firestore sync and JSON export/import backup capabilities.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher)
@@ -33,7 +32,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/calori.git
+git clone https://github.com/ndunl075/calori.git
 
 # Navigate to project directory
 cd calori
@@ -51,7 +50,7 @@ To access on a mobile device on your local WiFi network, navigate to `http://<YO
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 Calori/
@@ -60,15 +59,17 @@ Calori/
 ├── vite.config.js
 ├── LICENSE
 ├── README.md
+├── .env.example                  # Environment configuration template
 ├── src/
 │   ├── main.jsx
 │   ├── App.jsx
-│   ├── index.css                 # Design system, glassmorphism & mesh gradients
+│   ├── index.css                 # Design system & glassmorphism tokens
 │   ├── services/
 │   │   ├── cloudStorage.js       # Cloud session sync & LocalStorage fallback
+│   │   ├── firebase.js           # Firebase Firestore database service
 │   │   └── foodDatabase.js       # Macro database & search engine
 │   ├── components/
-│   │   ├── Header.jsx            # Top status bar & cloud sync pill
+│   │   ├── Header.jsx            # Top status bar & cloud sync indicator
 │   │   ├── RingGauge.jsx         # SVG radial ring progress gauge
 │   │   ├── CoachingCard.jsx      # AI nutrition insight banner
 │   │   ├── EnergyBalance.jsx     # Macro equalizer balance widget
@@ -76,14 +77,12 @@ Calori/
 │   │   ├── FoodLogModal.jsx      # Bottom sheet search & quick-add modal
 │   │   └── BottomNav.jsx         # Floating glassmorphism tab bar
 │   └── views/
-│       ├── HomeView.jsx          # Dashboard overview with triple rings
-│       ├── EnergyView.jsx        # Sand mesh Strain & burn screen
-│       ├── RecoveryView.jsx      # Teal mountain Recovery & health screen
-│       └── AnalyticsView.jsx     # Weekly trends & cloud backup manager
+│       ├── HomeView.jsx          # Dashboard overview with calorie bar & macro rings
+│       └── AnalyticsView.jsx     # Weekly trends, real log insights & target manager
 ```
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE). Contributions, forks, and pull requests are welcome!
