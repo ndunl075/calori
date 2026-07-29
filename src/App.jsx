@@ -125,7 +125,7 @@ export default function App() {
 
       {/* Main Scrollable View Area */}
       <main className="app-content">
-        {(activeTab === 'home' || activeTab === 'journal') && (
+        {activeTab === 'home' && (
           <HomeView 
             totals={totals}
             targets={targets}
@@ -133,6 +133,16 @@ export default function App() {
             onDeleteLog={handleDeleteLog}
             onNavigate={(tab) => setActiveTab(tab)}
             onUpdateTargets={handleUpdateTargets}
+          />
+        )}
+
+        {activeTab === 'journal' && (
+          <JournalView 
+            allLogs={allLogs}
+            selectedDate={selectedDate}
+            onSelectDate={(date) => setSelectedDate(date)}
+            onDeleteLog={handleDeleteLog}
+            onQuickAddCategory={() => setShowLogModal(true)}
           />
         )}
 
