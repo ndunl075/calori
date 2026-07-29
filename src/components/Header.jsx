@@ -13,15 +13,6 @@ export default function Header({
 
   return (
     <header className="header-container">
-      {/* Mobile Top Status Bar */}
-      <div className="status-bar">
-        <span>12:19</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '0.72rem', opacity: 0.8 }}>5G</span>
-          <span style={{ fontSize: '0.75rem', fontWeight: 800 }}>79%</span>
-        </div>
-      </div>
-
       {/* View Header */}
       <div className="top-header">
         {isDetailView ? (

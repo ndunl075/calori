@@ -43,45 +43,28 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #0b0f19;
+  background-color: #f8fafc;
   color: var(--text-primary);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Mobile Frame wrapper */
+/* App Main Container */
 .app-viewport-wrapper {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   min-height: 100vh;
   background-color: #f8fafc;
   position: relative;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-}
-
-@media (min-width: 440px) {
-  .app-viewport-wrapper {
-    min-height: 880px;
-    height: 92vh;
-    margin: 20px 0;
-    border-radius: 36px;
-    border: 1px solid #e2e8f0;
-  }
 }
 
 /* Scrollable Main Content Container */
 .app-content {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-bottom: 110px; /* Space for floating bottom nav */
-  -webkit-overflow-scrolling: touch;
+  padding-bottom: 100px; /* Space for floating bottom nav */
 }
 
 .app-content::-webkit-scrollbar {
@@ -222,12 +205,14 @@ body {
 
 /* Floating Bottom Navigation */
 .bottom-nav-container {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
-  left: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 440px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 36px;
@@ -235,8 +220,8 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 0 12px;
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   z-index: 50;
 }
 
