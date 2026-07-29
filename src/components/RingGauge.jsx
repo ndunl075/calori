@@ -5,8 +5,9 @@ export default function RingGauge({
   size = 80, 
   strokeWidth = 9, 
   gradientId = 'gaugeGradient',
-  startColor = '#ff7a00',
-  endColor = '#ffb800',
+  startColor = '#a3e635',
+  midColor = '#22c55e',
+  endColor = '#15803d',
   label = '',
   sublabel = '',
   onClick
@@ -28,17 +29,34 @@ export default function RingGauge({
         position: 'relative'
       }}
     >
-      <div style={{ position: 'relative', width: size, height: size }}>
+      <div 
+        style={{ 
+          position: 'relative', 
+          width: size, 
+          height: size,
+          borderRadius: '50%',
+          boxShadow: '0 8px 24px rgba(15, 23, 42, 0.06)'
+        }}
+      >
         <svg width={size} height={size} style={{ display: 'block' }}>
           <defs>
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={startColor} />
+              <stop offset="50%" stopColor={midColor || startColor} />
               <stop offset="100%" stopColor={endColor} />
             </linearGradient>
-            <filter id={`shadow-${gradientId}`} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor={startColor} floodOpacity="0.3" />
+            <filter id={`shadow-${gradientId}`} x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor={midColor || startColor} floodOpacity="0.4" />
             </filter>
           </defs>
+
+          {/* White Floating Inner Disc */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius + strokeWidth / 2}
+            fill="#ffffff"
+          />
 
           {/* Background Track Circle */}
           <circle
@@ -46,12 +64,12 @@ export default function RingGauge({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#e2e8f0"
+            stroke="#f1f5f9"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
           />
 
-          {/* Animated Gradient Progress Arc */}
+          {/* Animated Multi-Stop Gradient Progress Arc */}
           <circle
             cx={size / 2}
             cy={size / 2}

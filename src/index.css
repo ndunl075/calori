@@ -57,7 +57,7 @@ body {
   width: 100%;
   max-width: 440px;
   min-height: 100vh;
-  background-color: var(--bg-app);
+  background: radial-gradient(circle at 50% -10%, rgba(153, 246, 228, 0.3) 0%, rgba(254, 243, 199, 0.2) 30%, #f4f5f8 65%);
   position: relative;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   display: flex;

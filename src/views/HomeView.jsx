@@ -126,14 +126,15 @@ export default function HomeView({
       {/* 3 Rings Below: Carbs, Fat, Protein */}
       <div className="rings-container">
         {/* Ring 1: Carbs */}
-        <div className="ring-card" onClick={() => onNavigate('analytics')} style={{ cursor: 'pointer' }}>
+        <div className="ring-card" onClick={() => onNavigate('trends')} style={{ cursor: 'pointer' }}>
           <RingGauge 
             percentage={carbsPercent}
-            size={74}
+            size={76}
             strokeWidth={8}
             gradientId="carbsGrad"
             startColor="#6366f1"
-            endColor="#8b5cf6"
+            midColor="#8b5cf6"
+            endColor="#d946ef"
           />
           <span className="ring-label">Carbs</span>
           <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
@@ -142,14 +143,15 @@ export default function HomeView({
         </div>
 
         {/* Ring 2: Fat */}
-        <div className="ring-card" onClick={() => onNavigate('analytics')} style={{ cursor: 'pointer' }}>
+        <div className="ring-card" onClick={() => onNavigate('trends')} style={{ cursor: 'pointer' }}>
           <RingGauge 
             percentage={fatPercent}
-            size={74}
+            size={76}
             strokeWidth={8}
             gradientId="fatGrad"
-            startColor="#f59e0b"
-            endColor="#d97706"
+            startColor="#ffb800"
+            midColor="#ff7a00"
+            endColor="#ea580c"
           />
           <span className="ring-label">Fat</span>
           <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
@@ -158,14 +160,15 @@ export default function HomeView({
         </div>
 
         {/* Ring 3: Protein */}
-        <div className="ring-card" onClick={() => onNavigate('recovery')} style={{ cursor: 'pointer' }}>
+        <div className="ring-card" onClick={() => onNavigate('trends')} style={{ cursor: 'pointer' }}>
           <RingGauge 
             percentage={proteinPercent}
-            size={74}
+            size={76}
             strokeWidth={8}
             gradientId="proteinGrad"
-            startColor="#22c55e"
-            endColor="#a3e635"
+            startColor="#a3e635"
+            midColor="#22c55e"
+            endColor="#16a34a"
           />
           <span className="ring-label">Protein</span>
           <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
