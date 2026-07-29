@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Cloud, Download, Upload, Copy, Check, Save, Target, BarChart2 } from 'lucide-react';
 import { exportCloudBackupJSON, importCloudBackupJSON, getCloudSessionId } from '../services/cloudStorage';
 
-export default function AnalyticsView({ totals, targets, onUpdateTargets }) {
+export default function AnalyticsView({ totals, targets, onUpdateTargets, allLogs = {} }) {
   const [copiedKey, setCopiedKey] = useState(false);
   const [customTargets, setCustomTargets] = useState({ ...targets });
   const [backupJSON, setBackupJSON] = useState('');
@@ -11,16 +11,24 @@ export default function AnalyticsView({ totals, targets, onUpdateTargets }) {
 
   const sessionId = getCloudSessionId();
 
-  // Mock past 7 days history data
-  const weeklyData = [
-    { day: 'Mon', cal: 2150, protein: 140 },
-    { day: 'Tue', cal: 1980, protein: 132 },
-    { day: 'Wed', cal: 2280, protein: 155 },
-    { day: 'Thu', cal: 2040, protein: 142 },
-    { day: 'Fri', cal: 2310, protein: 160 },
-    { day: 'Sat', cal: 2190, protein: 148 },
-    { day: 'Today', cal: totals.calories, protein: Math.round(totals.protein) }
-  ];
+  // Compute real 7-day past history from actual user log entries
+  const weeklyData = Array.from({ length: 7 }).map((_, idx) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - idx));
+    const dateStr = d.toISOString().split('T')[0];
+    const dayLabel = idx === 6 ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short' });
+    
+    const dayLogs = allLogs[dateStr] || [];
+    const dayCal = dayLogs.reduce((sum, item) => sum + (item.category !== 'Water' ? item.calories || 0 : 0), 0);
+    const dayProtein = dayLogs.reduce((sum, item) => sum + (item.category !== 'Water' ? item.protein || 0 : 0), 0);
+
+    return {
+      date: dateStr,
+      day: dayLabel,
+      cal: Math.round(dayCal),
+      protein: Math.round(dayProtein)
+    };
+  });
 
   const handleCopyKey = () => {
     navigator.clipboard.writeText(sessionId);

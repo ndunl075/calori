@@ -24,7 +24,7 @@ export default function RecoveryView({ totals, targets, logs, onDeleteLog }) {
             }}
           >
             <RingGauge 
-              percentage={recoveryPercent > 0 ? recoveryPercent : 64}
+              percentage={recoveryPercent}
               size={135}
               strokeWidth={13}
               gradientId="recoveryLargeGrad"
@@ -35,37 +35,39 @@ export default function RecoveryView({ totals, targets, logs, onDeleteLog }) {
           </div>
         </div>
 
-        {/* Resting HRV & Resting HR Cards matching Screenshot 3 */}
+        {/* Protein Target & Hydration Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
           <div className="card" style={{ margin: 0, padding: '16px 14px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700 }}>
               <Activity size={14} />
-              <span>Resting HRV</span>
+              <span>Protein Logged</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginTop: '8px' }}>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>107.8</span>
-              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b' }}>ms</span>
+              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>{Math.round(totals.protein)}</span>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b' }}>/ {targets.protein}g</span>
             </div>
           </div>
 
           <div className="card" style={{ margin: 0, padding: '16px 14px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700 }}>
               <Heart size={14} color="#ef4444" />
-              <span>Resting HR</span>
+              <span>Recovery Score</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginTop: '8px' }}>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>49.5</span>
-              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b' }}>bpm</span>
+              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>{recoveryPercent}%</span>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b' }}>Target</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Coaching Card with View Insights action matching Screenshot 3 */}
+      {/* Coaching Card matching Screenshot 3 */}
       <CoachingCard 
-        text="Recovery is optimal today. Your high protein synthesis (64% target achieved) and stable Resting HRV (107.8 ms) indicate excellent muscle repair readiness."
-        hasAction={true}
-        actionText="View nutrition insights"
+        text={
+          totals.protein === 0
+            ? "No protein logged yet today. High quality protein intake accelerates muscle recovery and metabolic health."
+            : `You have achieved ${recoveryPercent}% of your daily protein target (${Math.round(totals.protein)}g / ${targets.protein}g). Keep up the great work!`
+        }
       />
 
       {/* Sleep & Rest Log Card matching Screenshot 3 */}

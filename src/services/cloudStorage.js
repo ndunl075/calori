@@ -26,43 +26,9 @@ export const getCloudSessionId = () => {
   return id;
 };
 
-// Initial pre-loaded demonstration logs for today so the user has immediate rich data
-export const getInitialDemoLogs = () => {
-  const todayKey = new Date().toISOString().split('T')[0];
-  return {
-    [todayKey]: [
-      {
-        id: '1',
-        name: 'Oatmeal & Blueberries',
-        category: 'Breakfast',
-        calories: 340,
-        protein: 12,
-        carbs: 58,
-        fat: 6,
-        time: '08:15 AM'
-      },
-      {
-        id: '2',
-        name: 'Grilled Chicken Salad & Avocado',
-        category: 'Lunch',
-        calories: 520,
-        protein: 48,
-        carbs: 24,
-        fat: 22,
-        time: '01:20 PM'
-      },
-      {
-        id: '3',
-        name: 'Whey Protein Shake',
-        category: 'Snacks',
-        calories: 160,
-        protein: 30,
-        carbs: 4,
-        fat: 2.5,
-        time: '04:45 PM'
-      }
-    ]
-  };
+// Initial empty logs structure for real user usage
+export const getInitialEmptyLogs = () => {
+  return {};
 };
 
 // Local & Cloud storage manager
@@ -70,15 +36,20 @@ export const loadAllLogs = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.LOGS);
     if (!raw) {
-      const demo = getInitialDemoLogs();
-      localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(demo));
-      return demo;
+      const empty = getInitialEmptyLogs();
+      localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(empty));
+      return empty;
     }
     return JSON.parse(raw);
   } catch (err) {
     console.error('Error loading local logs:', err);
-    return getInitialDemoLogs();
+    return getInitialEmptyLogs();
   }
+};
+
+export const clearAllData = () => {
+  localStorage.removeItem(STORAGE_KEYS.LOGS);
+  return getInitialEmptyLogs();
 };
 
 export const saveAllLogs = (allLogs) => {

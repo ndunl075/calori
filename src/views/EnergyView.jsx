@@ -41,10 +41,10 @@ export default function EnergyView({ totals, targets, logs, onDeleteLog }) {
           <div className="card" style={{ margin: 0, padding: '16px 14px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700 }}>
               <Clock size={14} />
-              <span>Duration</span>
+              <span>Logged Meals</span>
             </div>
             <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '8px' }}>
-              45m
+              {logs.length} item{logs.length !== 1 ? 's' : ''}
             </div>
           </div>
 
@@ -66,7 +66,11 @@ export default function EnergyView({ totals, targets, logs, onDeleteLog }) {
 
       {/* Coaching Card matching Screenshot 2 */}
       <CoachingCard 
-        text="Your body is capable of moderate training today. Try to aim for 50% - 81% Calorie Strain to maintain high fat oxidation."
+        text={
+          totals.calories === 0 
+            ? "No food logged yet today. Tap + below to add your first meal and start tracking your strain!"
+            : `You have logged ${totals.calories} kcal (${totalKJ.toLocaleString()} kJ). Aim for 50% - 81% Calorie Strain for optimal energy balance.`
+        }
       />
 
       {/* Heart Rate & Macro Zones */}

@@ -159,6 +159,7 @@ export default function App() {
             totals={totals}
             targets={targets}
             onUpdateTargets={handleUpdateTargets}
+            allLogs={allLogs}
           />
         )}
       </main>
