@@ -190,28 +190,6 @@ export default function HomeView({
         onDetailClick={() => onNavigate('energy')}
       />
 
-      {/* Health Monitor Summary Card */}
-      <div className="card" style={{ marginBottom: '20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-          <span style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0f172a' }}>Health Monitor</span>
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#22c55e' }}>● All Metrics Normal</span>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', textAlign: 'center' }}>
-          <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '12px' }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 700 }}>WATER</div>
-            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#0284c7' }}>{totals.water || 1250} ml</div>
-          </div>
-          <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '12px' }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 700 }}>FIBER</div>
-            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#65a30d' }}>28 g</div>
-          </div>
-          <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '12px' }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 700 }}>SODIUM</div>
-            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#d97706' }}>1,840 mg</div>
-          </div>
-        </div>
-      </div>
-
       {/* Meals Logged Timeline Feed */}
       <TimelineFeed 
         logs={logs}

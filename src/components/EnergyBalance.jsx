@@ -57,31 +57,49 @@ export default function EnergyBalance({
           </div>
         </div>
 
-        {/* Circular Med/Balance score widget matching screenshot */}
+        {/* Circular Med/Balance score widget matching screenshot with SVG mathematical dead-center alignment */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <div 
-            style={{
-              width: '68px',
-              height: '68px',
-              borderRadius: '50%',
-              border: '3px dashed #fbbf24',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justify: 'center',
-              textAlign: 'center',
-              background: '#fffbe6',
-              boxSizing: 'border-box',
-              padding: 0,
-              margin: 0
-            }}
-          >
-            <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#d97706', lineHeight: 1.1, margin: 0, padding: 0 }}>
-              {calPercent}%
-            </span>
-            <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#b45309', lineHeight: 1.1, marginTop: '2px' }}>
-              Target
-            </span>
+          <div style={{ width: '68px', height: '68px', position: 'relative' }}>
+            <svg width="68" height="68" viewBox="0 0 68 68" style={{ display: 'block' }}>
+              {/* Background filled circle */}
+              <circle cx="34" cy="34" r="31" fill="#fffbe6" />
+              {/* Dashed track */}
+              <circle 
+                cx="34" 
+                cy="34" 
+                r="31" 
+                fill="none" 
+                stroke="#fbbf24" 
+                strokeWidth="3" 
+                strokeDasharray="5 3" 
+              />
+              {/* Dead-Center Percentage Text */}
+              <text
+                x="50%"
+                y="42%"
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill="#d97706"
+                fontSize="16"
+                fontWeight="800"
+                fontFamily="Plus Jakarta Sans, sans-serif"
+              >
+                {calPercent}%
+              </text>
+              {/* Dead-Center Target Label */}
+              <text
+                x="50%"
+                y="66%"
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill="#b45309"
+                fontSize="9"
+                fontWeight="700"
+                fontFamily="Plus Jakarta Sans, sans-serif"
+              >
+                Target
+              </text>
+            </svg>
           </div>
         </div>
       </div>
