@@ -28,8 +28,8 @@ export default function RingGauge({
         position: 'relative'
       }}
     >
-      <div style={{ position: 'relative', width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
+      <div style={{ position: 'relative', width: size, height: size }}>
+        <svg width={size} height={size} style={{ display: 'block' }}>
           <defs>
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={startColor} />
@@ -64,49 +64,41 @@ export default function RingGauge({
             strokeLinecap="round"
             filter={`url(#shadow-${gradientId})`}
             style={{
+              transform: `rotate(-90deg)`,
+              transformOrigin: '50% 50%',
               transition: 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           />
-        </svg>
 
-        {/* Center Percentage & Value Display */}
-        <div 
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justify: 'center',
-            textAlign: 'center',
-            pointerEvents: 'none'
-          }}
-        >
-          <span style={{ 
-            fontSize: size > 120 ? '1.75rem' : '1.05rem', 
-            fontWeight: 800, 
-            color: '#0f172a',
-            lineHeight: 1,
-            margin: 0,
-            padding: 0
-          }}>
+          {/* Native SVG Dead-Center Text */}
+          <text
+            x="50%"
+            y={sublabel ? "44%" : "52%"}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fill="#0f172a"
+            fontSize={size > 120 ? '26' : '15'}
+            fontWeight="800"
+            fontFamily="Plus Jakarta Sans, sans-serif"
+          >
             {percentage}%
-          </span>
+          </text>
+
           {sublabel && (
-            <span style={{ 
-              fontSize: size > 120 ? '0.78rem' : '0.62rem', 
-              fontWeight: 700, 
-              color: '#64748b',
-              marginTop: '3px',
-              lineHeight: 1
-            }}>
+            <text
+              x="50%"
+              y="66%"
+              textAnchor="middle"
+              dominantBaseline="central"
+              fill="#64748b"
+              fontSize={size > 120 ? '12' : '9'}
+              fontWeight="700"
+              fontFamily="Plus Jakarta Sans, sans-serif"
+            >
               {sublabel}
-            </span>
+            </text>
           )}
-        </div>
+        </svg>
       </div>
 
       {label && (
