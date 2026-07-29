@@ -58,24 +58,28 @@ export default function EnergyBalance({
         </div>
 
         {/* Circular Med/Balance score widget matching screenshot */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <div 
             style={{
-              width: '64px',
-              height: '64px',
+              width: '68px',
+              height: '68px',
               borderRadius: '50%',
               border: '3px dashed #fbbf24',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justify: 'center',
-              background: '#fffbe6'
+              textAlign: 'center',
+              background: '#fffbe6',
+              boxSizing: 'border-box',
+              padding: 0,
+              margin: 0
             }}
           >
-            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#d97706', lineHeight: 1 }}>
+            <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#d97706', lineHeight: 1.1, margin: 0, padding: 0 }}>
               {calPercent}%
             </span>
-            <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#b45309' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#b45309', lineHeight: 1.1, marginTop: '2px' }}>
               Target
             </span>
           </div>
