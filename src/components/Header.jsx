@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown, ChevronLeft, Info, Cloud, CloudOff, Check } from 'lucide-react';
+import { ChevronDown, ChevronLeft, Info, Cloud, CloudOff, Check, User } from 'lucide-react';
 
 export default function Header({ 
   currentDateText, 
@@ -83,9 +83,13 @@ export default function Header({
                 <span>Cloud</span>
               </div>
 
-              {/* Profile Avatar Badge matching image "BS" */}
-              <div className="profile-avatar">
-                BS
+              {/* User Profile Badge */}
+              <div 
+                className="profile-avatar"
+                style={{ background: '#f1f5f9', color: '#0f172a', border: '1px solid #cbd5e1' }}
+                title="User Profile & Account"
+              >
+                <User size={18} />
               </div>
             </div>
           </>
