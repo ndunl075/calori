@@ -223,153 +223,44 @@ export default function AnalyticsView({ totals, targets, onUpdateTargets, allLog
         </div>
       </div>
 
-      {/* Target Goal Customization */}
-      <div className="card" style={{ margin: '0 0 16px 0' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
-          <Target size={20} color="#ff7a00" />
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Custom Macro Targets</h4>
-        </div>
-
-        <form onSubmit={handleSaveTargetsSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-            <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Daily Calories (kcal)</label>
-              <input 
-                type="number" 
-                className="input-field"
-                value={customTargets.calories}
-                onChange={(e) => setCustomTargets({ ...customTargets, calories: e.target.value })}
-              />
-            </div>
-            <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Protein Target (g)</label>
-              <input 
-                type="number" 
-                className="input-field"
-                value={customTargets.protein}
-                onChange={(e) => setCustomTargets({ ...customTargets, protein: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-            <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Carbs Target (g)</label>
-              <input 
-                type="number" 
-                className="input-field"
-                value={customTargets.carbs}
-                onChange={(e) => setCustomTargets({ ...customTargets, carbs: e.target.value })}
-              />
-            </div>
-            <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Fat Target (g)</label>
-              <input 
-                type="number" 
-                className="input-field"
-                value={customTargets.fat}
-                onChange={(e) => setCustomTargets({ ...customTargets, fat: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="btn-primary" style={{ marginTop: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            {savedSuccess ? <Check size={18} /> : <Save size={18} />}
-            <span>{savedSuccess ? 'Targets Saved!' : 'Save New Goals'}</span>
-          </button>
-        </form>
-      </div>
-
-      {/* Cloud Storage & Backup Manager */}
+      {/* Real Macro Ratio Breakdown */}
       <div className="card" style={{ margin: '0 0 16px 0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <Cloud size={20} color="#0284c7" />
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Cloud Storage Sync</h4>
+          <PieChart size={20} color="#8b5cf6" />
+          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Macro Energy Distribution</h4>
         </div>
 
-        <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '12px', marginBottom: '14px', border: '1px solid #e2e8f0' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>Cloud Session Key</div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <code style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a' }}>{sessionId}</code>
-            <button 
-              onClick={handleCopyKey}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-                padding: '6px 12px',
-                borderRadius: '8px',
-                background: copiedKey ? '#f0fdf4' : '#ffffff',
-                border: '1px solid #cbd5e1',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: copiedKey ? '#16a34a' : '#334155',
-                cursor: 'pointer'
-              }}
-            >
-              {copiedKey ? <Check size={14} /> : <Copy size={14} />}
-              <span>{copiedKey ? 'Copied' : 'Copy'}</span>
-            </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              <span>Carbohydrates ({realInsights.avgCarbs}g avg)</span>
+              <span style={{ color: '#6366f1' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.carbs * 4 / (totals.calories || 1)) * 100) : 45}% Energy</span>
+            </div>
+            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.carbs * 4 / (totals.calories || 1)) * 100) : 45}%`, height: '100%', background: '#6366f1', borderRadius: '4px' }} />
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              <span>Protein ({realInsights.avgProtein}g avg)</span>
+              <span style={{ color: '#22c55e' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.protein * 4 / (totals.calories || 1)) * 100) : 30}% Energy</span>
+            </div>
+            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.protein * 4 / (totals.calories || 1)) * 100) : 30}%`, height: '100%', background: '#22c55e', borderRadius: '4px' }} />
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              <span>Fats ({realInsights.avgFat}g avg)</span>
+              <span style={{ color: '#f59e0b' }}>{totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.fat * 9 / (totals.calories || 1)) * 100) : 25}% Energy</span>
+            </div>
+            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ width: `${totals.carbs + totals.fat + totals.protein > 0 ? Math.round((totals.fat * 9 / (totals.calories || 1)) * 100) : 25}%`, height: '100%', background: '#f59e0b', borderRadius: '4px' }} />
+            </div>
           </div>
         </div>
-
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
-          <button 
-            onClick={handleExport}
-            style={{
-              flex: 1,
-              padding: '10px',
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
-              background: '#ffffff',
-              color: '#0f172a',
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              display: 'flex',
-              alignItems: 'center',
-              justify: 'center',
-              gap: '6px',
-              cursor: 'pointer'
-            }}
-          >
-            <Download size={14} />
-            <span>Export Cloud JSON</span>
-          </button>
-        </div>
-
-        {backupJSON && (
-          <div style={{ marginTop: '10px' }}>
-            <textarea 
-              rows={4}
-              value={backupJSON}
-              onChange={(e) => setBackupJSON(e.target.value)}
-              className="input-field"
-              style={{ fontSize: '0.75rem', fontFamily: 'monospace' }}
-            />
-            <button 
-              onClick={handleImport}
-              style={{
-                width: '100%',
-                marginTop: '8px',
-                padding: '10px',
-                borderRadius: '12px',
-                background: '#0284c7',
-                color: '#ffffff',
-                border: 'none',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              Restore Data from JSON
-            </button>
-            {importStatus && (
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#16a34a', marginTop: '6px', textAlign: 'center' }}>
-                {importStatus}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import HomeView from './views/HomeView';
 import EnergyView from './views/EnergyView';
 import RecoveryView from './views/RecoveryView';
 import AnalyticsView from './views/AnalyticsView';
+import GoalsView from './views/GoalsView';
 
 import { 
   loadAllLogs, 
@@ -137,12 +138,19 @@ export default function App() {
           />
         )}
 
-        {(activeTab === 'trends' || activeTab === 'targets' || activeTab === 'analytics') && (
+        {(activeTab === 'trends' || activeTab === 'analytics') && (
           <AnalyticsView 
             totals={totals}
             targets={targets}
             onUpdateTargets={handleUpdateTargets}
             allLogs={allLogs}
+          />
+        )}
+
+        {activeTab === 'targets' && (
+          <GoalsView 
+            targets={targets}
+            onUpdateTargets={handleUpdateTargets}
           />
         )}
       </main>
