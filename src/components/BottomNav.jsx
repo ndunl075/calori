@@ -1,10 +1,10 @@
 import React from 'react';
-import { Home, Plus, LineChart, Target } from 'lucide-react';
+import { Home, BookOpen, Plus, LineChart, Target } from 'lucide-react';
 
 export default function BottomNav({ activeTab, onTabChange, onQuickAddClick }) {
   return (
-    <div className="bottom-nav-container">
-      {/* Home Tab */}
+    <nav className="bottom-nav-container" aria-label="Bottom Navigation">
+      {/* 1. Home Tab */}
       <button 
         className={`nav-tab ${activeTab === 'home' ? 'active' : ''}`}
         onClick={() => onTabChange('home')}
@@ -13,7 +13,16 @@ export default function BottomNav({ activeTab, onTabChange, onQuickAddClick }) {
         <span>Home</span>
       </button>
 
-      {/* Floating Center (+) Quick Add Button */}
+      {/* 2. Journal / Meals Tab */}
+      <button 
+        className={`nav-tab ${activeTab === 'journal' ? 'active' : ''}`}
+        onClick={() => onTabChange('journal')}
+      >
+        <BookOpen size={20} />
+        <span>Journal</span>
+      </button>
+
+      {/* 3. Dead-Center Floating (+) Quick Add Button */}
       <button 
         className="nav-tab-plus"
         onClick={onQuickAddClick}
@@ -22,7 +31,7 @@ export default function BottomNav({ activeTab, onTabChange, onQuickAddClick }) {
         <Plus size={26} strokeWidth={2.5} />
       </button>
 
-      {/* Trends & Insights Tab */}
+      {/* 4. Trends & Insights Tab */}
       <button 
         className={`nav-tab ${activeTab === 'trends' ? 'active' : ''}`}
         onClick={() => onTabChange('trends')}
@@ -31,7 +40,7 @@ export default function BottomNav({ activeTab, onTabChange, onQuickAddClick }) {
         <span>Trends</span>
       </button>
 
-      {/* Targets & Goals Tab */}
+      {/* 5. Targets & Goals Tab */}
       <button 
         className={`nav-tab ${activeTab === 'targets' ? 'active' : ''}`}
         onClick={() => onTabChange('targets')}
@@ -39,6 +48,6 @@ export default function BottomNav({ activeTab, onTabChange, onQuickAddClick }) {
         <Target size={20} />
         <span>Goals</span>
       </button>
-    </div>
+    </nav>
   );
 }

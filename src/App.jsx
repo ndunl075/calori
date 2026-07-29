@@ -125,7 +125,7 @@ export default function App() {
 
       {/* Main Scrollable View Area */}
       <main className="app-content">
-        {activeTab === 'home' && (
+        {(activeTab === 'home' || activeTab === 'journal') && (
           <HomeView 
             totals={totals}
             targets={targets}
