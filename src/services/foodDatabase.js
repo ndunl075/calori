@@ -32,10 +32,15 @@ export const PRESET_FOODS = [
   { id: 'f32', name: 'Mixed Berries', category: 'Fruits', serving: '140g (1 cup)', calories: 70, protein: 1, carbs: 17, fat: 0.5 }
 ];
 
+import { loadSavedCustomFoods } from './cloudStorage';
+
 export const searchFoodDatabase = (query) => {
-  if (!query.trim()) return PRESET_FOODS;
+  const customFoods = loadSavedCustomFoods();
+  const allFoods = [...customFoods, ...PRESET_FOODS];
+  
+  if (!query.trim()) return allFoods;
   const q = query.toLowerCase().trim();
-  return PRESET_FOODS.filter(item => 
+  return allFoods.filter(item => 
     item.name.toLowerCase().includes(q) || item.category.toLowerCase().includes(q)
   );
 };

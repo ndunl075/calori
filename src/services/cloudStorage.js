@@ -1,10 +1,10 @@
 // Calori Cloud Data Storage & Sync Service
 
 const STORAGE_KEYS = {
-  LOGS: 'calori_logs_v1',
+  LOGS: 'calori_logs_v2', // bumped key to ensure previous demo logs in v1 are wiped clean!
   TARGETS: 'calori_targets_v1',
   SESSION_ID: 'calori_cloud_session_id',
-  SYNC_STATUS: 'calori_sync_status'
+  CUSTOM_FOODS: 'calori_custom_foods_v1'
 };
 
 // Default Daily Macro Goals
@@ -26,6 +26,28 @@ export const getCloudSessionId = () => {
   return id;
 };
 
+// Saved Custom Foods manager
+export const loadSavedCustomFoods = () => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.CUSTOM_FOODS);
+    return raw ? JSON.parse(raw) : [];
+  } catch (err) {
+    return [];
+  }
+};
+
+export const saveCustomFoodItem = (newFood) => {
+  try {
+    const existing = loadSavedCustomFoods();
+    const updated = [newFood, ...existing];
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_FOODS, JSON.stringify(updated));
+    return updated;
+  } catch (err) {
+    console.error('Error saving custom food:', err);
+    return [];
+  }
+};
+
 // Initial empty logs structure for real user usage
 export const getInitialEmptyLogs = () => {
   return {};
@@ -40,7 +62,8 @@ export const loadAllLogs = () => {
       localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(empty));
       return empty;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    return parsed;
   } catch (err) {
     console.error('Error loading local logs:', err);
     return getInitialEmptyLogs();
@@ -49,6 +72,7 @@ export const loadAllLogs = () => {
 
 export const clearAllData = () => {
   localStorage.removeItem(STORAGE_KEYS.LOGS);
+  localStorage.removeItem('calori_logs_v1');
   return getInitialEmptyLogs();
 };
 

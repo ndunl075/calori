@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Search, Plus, Camera, Sparkles, Check, Droplet, Coffee, Sun, Moon, Cookie } from 'lucide-react';
 import { searchFoodDatabase, PRESET_FOODS } from '../services/foodDatabase';
+import { saveCustomFoodItem } from '../services/cloudStorage';
 import confetti from 'canvas-confetti';
 
 const CATEGORIES = [
@@ -50,16 +51,34 @@ export default function FoodLogModal({ onClose, onAddLog }) {
     if (!customName.trim() || !customCalories) return;
 
     const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const calVal = parseFloat(customCalories) || 0;
+    const proteinVal = parseFloat(customProtein) || 0;
+    const carbsVal = parseFloat(customCarbs) || 0;
+    const fatVal = parseFloat(customFat) || 0;
+
     const newLog = {
       id: 'log_' + Date.now(),
       name: customName.trim(),
       category: activeCategory,
-      calories: parseFloat(customCalories) || 0,
-      protein: parseFloat(customProtein) || 0,
-      carbs: parseFloat(customCarbs) || 0,
-      fat: parseFloat(customFat) || 0,
+      calories: calVal,
+      protein: proteinVal,
+      carbs: carbsVal,
+      fat: fatVal,
       time: timeNow
     };
+
+    // Save to permanent custom food library for easy 1-tap re-use
+    saveCustomFoodItem({
+      id: 'custom_' + Date.now(),
+      name: `⭐ ${customName.trim()}`,
+      category: 'Saved Custom',
+      serving: '1 serving',
+      calories: calVal,
+      protein: proteinVal,
+      carbs: carbsVal,
+      fat: fatVal,
+      isCustom: true
+    });
 
     onAddLog(newLog);
     triggerCelebration();

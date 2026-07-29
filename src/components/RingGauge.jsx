@@ -28,8 +28,8 @@ export default function RingGauge({
         position: 'relative'
       }}
     >
-      <div style={{ position: 'relative', width: size, height: size }}>
-        <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+      <div style={{ position: 'relative', width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', display: 'block' }}>
           <defs>
             <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={startColor} />
@@ -69,31 +69,39 @@ export default function RingGauge({
           />
         </svg>
 
-        {/* Center Percentage Display */}
+        {/* Center Percentage & Value Display */}
         <div 
           style={{
             position: 'absolute',
-            inset: 0,
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justify: 'center'
+            justify: 'center',
+            textAlign: 'center',
+            pointerEvents: 'none'
           }}
         >
           <span style={{ 
-            fontSize: size > 120 ? '1.8rem' : '1.05rem', 
+            fontSize: size > 120 ? '1.75rem' : '1.05rem', 
             fontWeight: 800, 
             color: '#0f172a',
-            lineHeight: 1
+            lineHeight: 1,
+            margin: 0,
+            padding: 0
           }}>
             {percentage}%
           </span>
           {sublabel && (
             <span style={{ 
-              fontSize: size > 120 ? '0.8rem' : '0.65rem', 
+              fontSize: size > 120 ? '0.78rem' : '0.62rem', 
               fontWeight: 700, 
               color: '#64748b',
-              marginTop: '2px'
+              marginTop: '3px',
+              lineHeight: 1
             }}>
               {sublabel}
             </span>

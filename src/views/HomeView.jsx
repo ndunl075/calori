@@ -12,62 +12,122 @@ export default function HomeView({
   onNavigate 
 }) {
   const calPercent = Math.min(Math.round((totals.calories / targets.calories) * 100), 100);
-  const proteinPercent = Math.min(Math.round((totals.protein / targets.protein) * 100), 100);
   const carbsPercent = Math.min(Math.round((totals.carbs / targets.carbs) * 100), 100);
+  const fatPercent = Math.min(Math.round((totals.fat / targets.fat) * 100), 100);
+  const proteinPercent = Math.min(Math.round((totals.protein / targets.protein) * 100), 100);
+
+  const remainingCalories = Math.max(targets.calories - totals.calories, 0);
 
   // Dynamic AI coaching message logic based on logged intake
   const getCoachingMessage = () => {
-    const remainingCal = targets.calories - totals.calories;
-    if (remainingCal > 800) {
-      return "Calorie deficit is high today. Focus on nutrient-dense meals with balanced protein and healthy fats for your remaining calories.";
-    } else if (remainingCal > 200) {
-      return `Solid energy intake! You have ${remainingCal} kcal remaining for dinner. Protein intake is on track for optimal recovery.`;
+    if (totals.calories === 0) {
+      return "No food logged yet today. Tap + below to add your first meal and hit your daily macro goals!";
+    }
+    if (remainingCalories > 800) {
+      return `You have ${remainingCalories} kcal remaining today. Focus on high-protein meals with complex carbs.`;
+    } else if (remainingCalories > 0) {
+      return `On track! You have ${remainingCalories} kcal remaining for dinner. Great macro balance.`;
     } else {
-      return "Great job meeting your daily calorie target! Keep hydrated with water for evening rest.";
+      return "Awesome job! You have hit 100% of your daily calorie target for today!";
     }
   };
 
   return (
     <div style={{ animation: 'fadeIn 0.25s ease' }}>
-      {/* 3 Concentric Ring Cards matching Screenshot 1 */}
+      {/* Top Rectangular Calorie Bar */}
+      <div 
+        className="card" 
+        onClick={() => onNavigate('energy')} 
+        style={{ cursor: 'pointer', marginBottom: '14px', background: 'linear-gradient(135deg, #ffffff 0%, #fffbf5 100%)' }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f97316', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+              Daily Calories
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.2 }}>
+              {totals.calories} <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>/ {targets.calories} kcal</span>
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#22c55e' }}>
+              {remainingCalories}
+            </div>
+            <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b' }}>
+              Remaining
+            </div>
+          </div>
+        </div>
+
+        {/* Rectangular Progress Bar */}
+        <div style={{ width: '100%', height: '14px', background: '#f1f5f9', borderRadius: '8px', overflow: 'hidden', margin: '10px 0 12px 0' }}>
+          <div 
+            style={{
+              width: `${calPercent}%`,
+              height: '100%',
+              background: 'linear-gradient(90deg, #ff7a00 0%, #ffb800 100%)',
+              borderRadius: '8px',
+              transition: 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          />
+        </div>
+
+        {/* Bottom Pill Summary */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', fontWeight: 700, color: '#64748b', background: '#f8fafc', padding: '8px 12px', borderRadius: '10px' }}>
+          <span>Logged: <strong style={{ color: '#0f172a' }}>{totals.calories} kcal</strong></span>
+          <span>Target: <strong style={{ color: '#0f172a' }}>{targets.calories} kcal</strong></span>
+          <span>Score: <strong style={{ color: '#ff7a00' }}>{calPercent}%</strong></span>
+        </div>
+      </div>
+
+      {/* 3 Rings Below: Carbs, Fat, Protein */}
       <div className="rings-container">
-        {/* Ring 1: Calorie Strain */}
-        <div className="ring-card" onClick={() => onNavigate('energy')} style={{ cursor: 'pointer' }}>
-          <RingGauge 
-            percentage={calPercent}
-            size={74}
-            strokeWidth={8}
-            gradientId="strainGrad"
-            startColor="#ff7a00"
-            endColor="#ffb800"
-          />
-          <span className="ring-label">Calories</span>
-        </div>
-
-        {/* Ring 2: Protein Recovery */}
-        <div className="ring-card" onClick={() => onNavigate('recovery')} style={{ cursor: 'pointer' }}>
-          <RingGauge 
-            percentage={proteinPercent}
-            size={74}
-            strokeWidth={8}
-            gradientId="recoveryGrad"
-            startColor="#22c55e"
-            endColor="#a3e635"
-          />
-          <span className="ring-label">Protein</span>
-        </div>
-
-        {/* Ring 3: Carbs Energy */}
+        {/* Ring 1: Carbs */}
         <div className="ring-card" onClick={() => onNavigate('analytics')} style={{ cursor: 'pointer' }}>
           <RingGauge 
             percentage={carbsPercent}
             size={74}
             strokeWidth={8}
-            gradientId="sleepGrad"
+            gradientId="carbsGrad"
             startColor="#6366f1"
             endColor="#8b5cf6"
           />
           <span className="ring-label">Carbs</span>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
+            {Math.round(totals.carbs)} / {targets.carbs}g
+          </span>
+        </div>
+
+        {/* Ring 2: Fat */}
+        <div className="ring-card" onClick={() => onNavigate('analytics')} style={{ cursor: 'pointer' }}>
+          <RingGauge 
+            percentage={fatPercent}
+            size={74}
+            strokeWidth={8}
+            gradientId="fatGrad"
+            startColor="#f59e0b"
+            endColor="#d97706"
+          />
+          <span className="ring-label">Fat</span>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
+            {Math.round(totals.fat)} / {targets.fat}g
+          </span>
+        </div>
+
+        {/* Ring 3: Protein */}
+        <div className="ring-card" onClick={() => onNavigate('recovery')} style={{ cursor: 'pointer' }}>
+          <RingGauge 
+            percentage={proteinPercent}
+            size={74}
+            strokeWidth={8}
+            gradientId="proteinGrad"
+            startColor="#22c55e"
+            endColor="#a3e635"
+          />
+          <span className="ring-label">Protein</span>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', marginTop: '2px' }}>
+            {Math.round(totals.protein)} / {targets.protein}g
+          </span>
         </div>
       </div>
 
