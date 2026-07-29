@@ -4,8 +4,6 @@ import BottomNav from './components/BottomNav';
 import FoodLogModal from './components/FoodLogModal';
 
 import HomeView from './views/HomeView';
-import EnergyView from './views/EnergyView';
-import RecoveryView from './views/RecoveryView';
 import AnalyticsView from './views/AnalyticsView';
 import GoalsView from './views/GoalsView';
 
